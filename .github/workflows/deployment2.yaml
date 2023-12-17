@@ -11,6 +11,7 @@ jobs:
       - name: Lint
         run: npm run lint
   test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -19,7 +20,19 @@ jobs:
         run: npm ci
       - name: test code
         run: npm run test
+  build:
+    needs: [ lint, test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout
+      - name: install dependencies
+        run: npm ci
+      - name: build code
+        run: npm run build
+
   deploy:
+    needs: [ lint, test, build ]
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
