@@ -1,8 +1,8 @@
 name: Deployment demo app
 on:
-  pull_request:
-    types:
-      - opened
+  push:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
